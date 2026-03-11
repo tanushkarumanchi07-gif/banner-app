@@ -1,78 +1,56 @@
-#include <iostream>
-#include <map>
-#include <vector>
-using namespace std;
+import java.util.HashMap;
+import java.util.Map;
 
-class CharacterPattern {
-private:
-    char character;
-    vector<string> pattern;
+public class BannerAppUC8 {
 
-public:
-    // Constructor
-    CharacterPattern(char c, vector<string> p) {
-        character = c;
-        pattern = p;
+    // Function to render banner
+    public static void renderBanner(String word, Map<Character, String[]> patterns) {
+
+        int height = 5;
+
+        for (int row = 0; row < height; row++) {
+            for (char c : word.toCharArray()) {
+
+                String[] pattern = patterns.get(c);
+
+                if (pattern != null) {
+                    System.out.print(pattern[row] + "  ");
+                }
+            }
+            System.out.println();
+        }
     }
 
-    // Getter for pattern
-    vector<string> getPattern() {
-        return pattern;
-    }
+    public static void main(String[] args) {
 
-    char getCharacter() {
-        return character;
-    }
+        Map<Character, String[]> patternMap = new HashMap<>();
 
-    // Static Inner Class
-    class CharacterPatternMap {
-    public:
-        static map<char, CharacterPattern> createMap() {
-            map<char, CharacterPattern> patternMap;
-
-            patternMap['O'] = CharacterPattern('O', {
+        patternMap.put('O', new String[]{
                 " *** ",
                 "*   *",
                 "*   *",
                 "*   *",
                 " *** "
-            });
+        });
 
-            patternMap['P'] = CharacterPattern('P', {
+        patternMap.put('P', new String[]{
                 "**** ",
                 "*   *",
                 "**** ",
                 "*    ",
                 "*    "
-            });
+        });
 
-            patternMap['S'] = CharacterPattern('S', {
+        patternMap.put('S', new String[]{
                 " ****",
                 "*    ",
                 " *** ",
                 "    *",
                 "**** "
-            });
+        });
 
-            return patternMap;
-        }
-    };
-};
+        String word = "OOPS";
 
-int main() {
-
-    string word = "OOPS";
-
-    map<char, CharacterPattern> patterns =
-        CharacterPattern::CharacterPatternMap::createMap();
-
-    for (int row = 0; row < 5; row++) {
-        for (char c : word) {
-            vector<string> p = patterns[c].getPattern();
-            cout << p[row] << "  ";
-        }
-        cout << endl;
+        renderBanner(word, patternMap);
     }
-
-    return 0;
 }
