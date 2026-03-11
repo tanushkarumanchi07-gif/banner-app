@@ -1,48 +1,78 @@
-*public class OOPSBannerApp {
+#include <iostream>
+#include <map>
+#include <vector>
+using namespace std;
 
-    public static void main(String[] args) {
-        int height = 5;
-        
-        for (int i = 0; i < height; i++) {
-            System.out.println(
-                getCharORow(i) + "  " + 
-                getCharORow(i) + "  " + 
-                getCharPRow(i) + "  " + 
-                getCharSRow(i)
-            );
+class CharacterPattern {
+private:
+    char character;
+    vector<string> pattern;
+
+public:
+    // Constructor
+    CharacterPattern(char c, vector<string> p) {
+        character = c;
+        pattern = p;
+    }
+
+    // Getter for pattern
+    vector<string> getPattern() {
+        return pattern;
+    }
+
+    char getCharacter() {
+        return character;
+    }
+
+    // Static Inner Class
+    class CharacterPatternMap {
+    public:
+        static map<char, CharacterPattern> createMap() {
+            map<char, CharacterPattern> patternMap;
+
+            patternMap['O'] = CharacterPattern('O', {
+                " *** ",
+                "*   *",
+                "*   *",
+                "*   *",
+                " *** "
+            });
+
+            patternMap['P'] = CharacterPattern('P', {
+                "**** ",
+                "*   *",
+                "**** ",
+                "*    ",
+                "*    "
+            });
+
+            patternMap['S'] = CharacterPattern('S', {
+                " ****",
+                "*    ",
+                " *** ",
+                "    *",
+                "**** "
+            });
+
+            return patternMap;
         }
+    };
+};
+
+int main() {
+
+    string word = "OOPS";
+
+    map<char, CharacterPattern> patterns =
+        CharacterPattern::CharacterPatternMap::createMap();
+
+    for (int row = 0; row < 5; row++) {
+        for (char c : word) {
+            vector<string> p = patterns[c].getPattern();
+            cout << p[row] << "  ";
+        }
+        cout << endl;
     }
 
-    public static String getCharORow(int row) {
-        String[] pattern = {
-            "  *** ",
-            " * * ",
-            " * * ",
-            " * * ",
-            "  *** "
-        };
-        return pattern[row];
-    }
-
-    public static String getCharPRow(int row) {
-        String[] pattern = {
-            " ***** ",
-            " * *",
-            " ***** ",
-            " * ",
-            " * "
-        };
-        return pattern[row];
-    }
-
-    public static String getCharSRow(int row) {
-        String[] pattern = {
-            "  **** ",
-            " * ",
-            "  *** ",
-            "     * ",
-            " **** "
-        };
-        return pattern[row];
-    }
-}*
+    return 0;
+}
